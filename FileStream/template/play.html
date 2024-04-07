@@ -8,17 +8,86 @@
     <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/plyr.css">
+    <link rel="stylesheet" href="https://dl.dropbox.com/scl/fi/b9aylzig9gg7cctubhzqs/styles3.css?rlkey=kmawdiec53kzc7moxel90x4ul">
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+       .video-container {
+    position: relative;
+    padding-top: 56.25%;
+}
 
+div.video-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: .756rem;
+}
+
+div.video-container .video-js .vjs-big-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(63, 63, 63, 0.219);
+    border: 2px solid rgba(255, 255, 255, 0.26);
+}
+
+@media screen and (max-width: 768px) {
+    div.video-container .video-js .vjs-big-play-button {
+        width: 3.85rem;
+    }
+}
+
+div.video-js .vjs-control-bar {
+    background: rgba(253, 253, 253, 0) !important;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: .786rem;
+    padding: 0 .569rem;
+    width: 100%;
+    z-index: 1;
+}
+
+div.video-js .vjs-progress-holder {
+    background-color: #6d6d6d41 !important;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+div.video-js .vjs-play-progress {
+    background-color: #c5c5c5 !important;
+    border-radius: 5px;
+    height: 100%;
+}
+
+div.video-js .vjs-slider-handle {
+    background-color: #c5c5c5 !important;
+    border: none;
+    box-shadow: 0 0 5px rgba(180, 180, 180, 0.5);
+    width: 10px;
+    height: 20px;
+}
+
+div.video-js .vjs-icon-placeholder, span {
+    color: #fff !important;
+}
+
+    </style>
+    <link rel="stylesheet" href="https://vjs.zencdn.net/7.15.4/video-js.css">
 </head>
 
 <body>
-    <nav>
+    <nav style="display: none;">
         <div class="nleft">
             <a href="#">
                 <h3 id="heading" style="z-index: 100;" class="magnet title">FILE STREAM</h3>
@@ -41,13 +110,15 @@
     <div class="outer">
         <div class="inner">
             <div class="main" id="main">
-                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
-                    width="100%"></video>
-                <div class="player"></div>
+                <div class="video-container">
+                    <video id="player" class="video-js" controls preload="auto" width="100%" data-setup='{}'>
+                        <source src="https://jhanck0.me/dl/660ed57ab7ba9a7972722682" type="video/mp4">
+                    </video>
+                </div>
                 <div class="file-name">
-                    <h4 style="display: inline;">Nombre del Archivo: </h4>
+                    <h4 style="display: inline;">Nombre: </h4>
                     <p style="display: inline;" id="myDiv">{{file_name}}</p><br>
-                    <h4 style="display: inline;">Tamaño del Archivo: </h4>
+                    <h4 style="display: inline;">Tamaño: </h4>
                     <p style="display: inline;">{{file_size}}</p>
                 </div>
                 <div class="downloadBtn">
@@ -74,13 +145,15 @@
                     <div class="about-dets">
 
                         <div class="abt-sec" id="abtus" style="padding: 160px 30px;">
-                            <h1 style="text-align: center;">BIENVENIDO A NUESTRO BOT DE <Span>TRANSMISIÓN DE ARCHIVOS</Span></h1>
+                            <h1 style="text-align: center;">BIENVENIDO A NUESTRO BOT DE <Span>STREAMING DE
+                                    ARCHIVOS</Span></h1>
                             <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
-                                Este es un Bot de Telegram para Transmitir <span>Películas</span> y <span>Series</span> directamente en
-                                Telegram. También puedes
+                                Este es un bot de Telegram para transmitir <span>Películas</span> y <span>Series</span>
+                                directamente en Telegram. También puedes
                                 <span>descargar</span> si lo deseas. Este bot fue desarrollado por <a
                                     href="https://github.com/AviPatilPro"><span style="font-weight: 700;">Avi</span></a>
-                                <br><br>Si te gusta este bot, no olvides compartirlo con tus amigos y familiares.
+                                <br><br>Si te gusta este bot, no dudes
+                                en compartirlo con tus amigos y familiares.
                             </p>
                         </div>
 
@@ -94,7 +167,7 @@
                                     <button>FILMYPIXEL</button>
                                 </a>
                                 <a class="magnet" href="https://t.me/PostersZone">
-                                    <button>ZONA DE POSTERS</button>
+                                    <button>ZONA DE CARTELES</button>
                                 </a>
                                 <a class="magnet" href="https://t.me/EpitomeQuality">
                                     <button>CALIDAD EPITOME</button>
@@ -103,7 +176,7 @@
                         </div>
 
                         <div class="abt-sec" id="contact">
-                            <p style="text-align: center;">Reporta errores y contáctanos en Telegram a continuación</p>
+                            <p style="text-align: center;">Informa errores y contáctanos en Telegram a continuación</p>
                             <div class="links contact">
                                 <a href="https://t.me/AvishkarPatil">
                                     <button>CONTACTO</button>
@@ -115,7 +188,7 @@
                 </div>
             </div>
         </div>
-        <footer>
+        <footer style="display: none;">
             <center>
 
                 <div class="movie-cont">
@@ -134,16 +207,16 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ranMovBtn" onclick="getDets()">Obtener Más Sugerencias de Películas</button>
+                    <button class="ranMovBtn" onclick="getDets()">Obtener más sugerencias de películas</button>
                 </div>
 
             </center>
 
             <center>
                 <div class="copyright">
-                    <h5 class="text-center">Derechos de Autor © 2024 <a href="https://github.com/AviPatilPro"><span
-                                style="font-weight: 700;">Avishkar Patil</span></a>. Todos
-                        los derechos reservados.</h5>
+                    <h5 class="text-center">Derechos de autor © 2024 <a href="https://github.com/AviPatilPro"><span
+                                style="font-weight: 700;">Avishkar Patil</span></a>. Todos los
+                        derechos reservados.</h5>
                 </div>
             </center>
         </footer>
@@ -155,6 +228,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
+<script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const uncopyableElement = document.querySelector(".uncopyable");
@@ -164,7 +238,6 @@
         });
     });
 </script>
-<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
-<script src="https://proavipatil.github.io/data/fs/src/script.js"></script>
+<script src="https://dl.dropbox.com/scl/fi/88cnhak5z7l4yby6r78wi/scriptCine.js?rlkey=8hu2nno1htmw4bjw3fjy2z2kv"></script>
 
 </html>
