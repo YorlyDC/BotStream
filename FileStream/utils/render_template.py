@@ -1,14 +1,23 @@
 import aiohttp
 import jinja2
 import urllib.parse
+import base64
 from FileStream.config import Telegram, Server
 from FileStream.utils.database import Database
 from FileStream.utils.human_readable import humanbytes
+
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
 async def render_page(db_id):
-    file_data=await db.get_file(db_id)
-    src = urllib.parse.urljoin(Server.URL, f'dl/{file_data["_id"]}')
+    file_data = await db.get_file(db_id)
+    
+    # Codifica la URL de descarga en base64
+    download_url = urllib.parse.urljoin(Server.URL, f'dl/{file_data["_id"]}')
+    encoded_url = base64.b64encode(download_url.encode()).decode()
+
+    # Construye la URL final
+    src = f"{Server.URL}/?url={encoded_url}"
+    
     file_size = humanbytes(file_data['file_size'])
     file_name = file_data['file_name'].replace("_", " ")
 
