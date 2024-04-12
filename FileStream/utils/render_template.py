@@ -16,7 +16,7 @@ async def render_page(db_id):
     encoded_url = base64.b64encode(download_url.encode()).decode()
 
     # Construye la URL final
-    src = f"{Server.URL}/?url={encoded_url}"
+    src = f"{Server.URL}?url={encoded_url}"
     
     file_size = humanbytes(file_data['file_size'])
     file_name = file_data['file_name'].replace("_", " ")
