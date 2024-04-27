@@ -4,222 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FileStreamBot | {{file_name}}</title>
+    <title>CineSensei: {{file_name}}</title>
     <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
-    <link rel="stylesheet" href="https://dl.dropbox.com/scl/fi/b9aylzig9gg7cctubhzqs/styles3.css?rlkey=kmawdiec53kzc7moxel90x4ul">
-
-
+    <link rel="stylesheet" href="https://dl.dropbox.com/scl/fi/6aorst1ks66x3111t2iw0/styledropbox.css?rlkey=mpotklcdkfz0pf4hxo7glgxna&st=h8olezfu">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://ssl.p.jwpcdn.com/player/v/8.21.2/jwplayer.js"></script>
+    <script type="text/javascript">jwplayer.key = "XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo"</script>
+    <link rel="stylesheet"
+        href="https://dl.dropbox.com/scl/fi/b9a1g14k09orgyafgi0xw/stylesJW.css?rlkey=l7fmf5r1dlzvl4n74p4higlmz&st=25rb0y6j">
     <style>
-       .video-container {
-    position: relative;
-    padding-top: 56.25%;
-}
+        #player {
+            position: relative;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: .659rem;
+            border: 3px solid rgb(255 255 255 / 15%);
+        }
 
-div.video-js {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: .756rem;
-}
+        @media (max-width: 640px) {
+            .downloadBtn {
+                padding: 10px;
+            }
 
-div.video-container .video-js .vjs-big-play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(63, 63, 63, 0.219);
-    border: 2px solid rgba(255, 255, 255, 0.26);
-}
-
-@media screen and (max-width: 768px) {
-    div.video-container .video-js .vjs-big-play-button {
-        width: 3.85rem;
-    }
-}
-
-div.video-js .vjs-control-bar {
-    background: rgba(253, 253, 253, 0) !important;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    bottom: .786rem;
-    padding: 0 .569rem;
-    width: 100%;
-    z-index: 1;
-}
-
-div.video-js .vjs-progress-holder {
-    background-color: #6d6d6d41 !important;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-div.video-js .vjs-play-progress {
-    background-color: #c5c5c5 !important;
-    border-radius: 5px;
-    height: 100%;
-}
-
-div.video-js .vjs-slider-handle {
-    background-color: #c5c5c5 !important;
-    border: none;
-    box-shadow: 0 0 5px rgba(180, 180, 180, 0.5);
-    width: 10px;
-    height: 20px;
-}
-
-div.video-js .vjs-icon-placeholder, span {
-    color: #fff !important;
-}
-
+            .bg-gray-800.md\:bg-transparent {
+                background-color: transparent !important;
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://vjs.zencdn.net/7.15.4/video-js.css">
 </head>
 
-<body>
-    <nav style="display: none;">
-        <div class="nleft">
-            <a href="#">
-                <h3 id="heading" style="z-index: 100;" class="magnet title">FILE STREAM</h3>
-            </a>
-        </div>
-        <div class="nryt">
-            <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)">INICIO</a>
+<body class="bg-gray-900 text-white">
+    <div class="flex justify-center items-center min-h-screen flex-col">
 
-            <a href="#abtus" class="about-btn magnet" onclick="toggleWidthnav(this)">ACERCA DE</a>
-        </div>
-    </nav>
-    <center>
-        <div class="about-nav">
-            <a href="#abtus" class="wlcm magnet" onclick="toggleWidth(this)">BIENVENIDO</a>
-            <a href="#channels" class="abt-chnl magnet" onclick="toggleWidth(this)">CANALES</a>
-            <a href="#contact" class="magnet contact-btn" onclick="toggleWidth(this)">CONTACTO</a>
-        </div>
-    </center>
-
-    <div class="outer">
-        <div class="inner">
-            <div class="main" id="main">
-                <div class="video-container">
-                    <video id="player" class="video-js" controls preload="auto" width="100%" data-setup='{}'>
-                        <source src="{{file_url}}" type="video/mp4">
-                    </video>
+        <div class="max-w-4xl w-full p-8 bg-gray-800 rounded-lg shadow-lg md:bg-transparent">
+            <h1 class="text-2xl text-center font-semibold mb-4">{{file_name}}</h1>
+            <div class="relative pb-56.25">
+                <div id="player" class="absolute top-0 left-0 w-full h-full"
+                    data-url="{{file_url}}">
                 </div>
-                <div class="file-name">
-                    <h4 style="display: inline;">Nombre: </h4>
-                    <p style="display: inline;" id="myDiv">{{file_name}}</p><br>
-                    <h4 style="display: inline;">Tamaño: </h4>
-                    <p style="display: inline;">{{file_size}}</p>
-                </div>
-                <div class="downloadBtn">
-                    <button class="magnet" onclick="streamDownload()">
-                        <img style="height: 30px;" src="https://i.ibb.co/RjzYttX/dl.png" alt="">descargar video
-                    </button>
-                    <button class="magnet" onclick="copyStreamLink()">
-                        <img src="https://i.ibb.co/CM4Y586/link.png" alt="Copiar Enlace">copiar enlace
-                    </button>
-                    <button class="magnet" onclick="vlc_player()">
-                        <img src="https://i.ibb.co/px6fQs1/vlc.png" alt="">ver en VLC PLAYER
-                    </button>
-                    <button class="magnet" onclick="mx_player()">
-                        <img src="https://i.ibb.co/41WvtQ3/mx.png" alt="">ver en MX PLAYER
-                    </button>
-                    <button class="magnet" onclick="n_player()">
-                        <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">ver en nPlayer
-                    </button>
-                </div>
-
             </div>
-            <div class="abt">
-                <div class="about">
-                    <div class="about-dets">
-
-                        <div class="abt-sec" id="abtus" style="padding: 160px 30px;">
-                            <h1 style="text-align: center;">BIENVENIDO A NUESTRO BOT DE <Span>STREAMING DE
-                                    ARCHIVOS</Span></h1>
-                            <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
-                                Este es un bot de Telegram para transmitir <span>Películas</span> y <span>Series</span>
-                                directamente en Telegram. También puedes
-                                <span>descargar</span> si lo deseas. Este bot fue desarrollado por <a
-                                    href="https://github.com/AviPatilPro"><span style="font-weight: 700;">Avi</span></a>
-                                <br><br>Si te gusta este bot, no dudes
-                                en compartirlo con tus amigos y familiares.
-                            </p>
-                        </div>
-
-                        <div class="abt-sec" id="channels">
-                            <h1>ÚNETE A NUESTROS CANALES DE <span>TELEGRAM</span></h1>
-                            <div class="links chnl-link">
-                                <a class="magnet" href="https://t.me/CheapieDeals">
-                                    <button>OFERTAS BARATAS</button>
-                                </a>
-                                <a class="magnet" href="https://t.me/FilmyPixel">
-                                    <button>FILMYPIXEL</button>
-                                </a>
-                                <a class="magnet" href="https://t.me/PostersZone">
-                                    <button>ZONA DE CARTELES</button>
-                                </a>
-                                <a class="magnet" href="https://t.me/EpitomeQuality">
-                                    <button>CALIDAD EPITOME</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="abt-sec" id="contact">
-                            <p style="text-align: center;">Informa errores y contáctanos en Telegram a continuación</p>
-                            <div class="links contact">
-                                <a href="https://t.me/AvishkarPatil">
-                                    <button>CONTACTO</button>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
+            <p class="mt-4 text-center">Otras opciones para reproducir la película</p>
+            <div class="mt-4 text-center">
+                <div class="downloadBtn grid grid-cols-2 gap-4">
+                    <button
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="streamDownload()">
+                        <img class="icon rounded-full" src="https://cdn-icons-png.flaticon.com/512/9153/9153957.png"
+                            alt="">Descargar
+                    </button>
+                    <button
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="copyStreamLink()">
+                        <img class="icon rounded-full" src="https://cdn-icons-png.flaticon.com/512/10241/10241077.png"
+                            alt="">Copiar URL
+                    </button>
+                    <button
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="vlc_player()">
+                        <img class="icon rounded-full" src="https://i.ibb.co/px6fQs1/vlc.png" alt="">VLC Player
+                    </button>
+                    <button
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="mx_player()">
+                        <img class="icon rounded-full"
+                            src="https://play.seletronic.com.br/wp-content/uploads/sites/19/2021/01/mx-player-icon.png"
+                            alt="">MX Player
+                    </button>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="n_player()">
+                        <img class="icon rounded-full" src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">nPlayer
+                    </button>
+                    <button
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-md"
+                        onclick="webVideoCast()">
+                        <img class="icon rounded-full"
+                            src="https://apkroar.com/wp-content/uploads/2020/04/web-video-cast-browser-to-tv-chromecast-roku.png"
+                            alt="">Transmitir al TV
+                    </button>
                 </div>
             </div>
         </div>
-        <footer style="display: none;">
-            <center>
-
-                <div class="movie-cont">
-                    <div class="movieSug">
-                        <div class="movieDets">
-
-                        </div>
-                        <div class="movieimg">
-                            <img src="">
-                        </div>
-                    </div>
-                    <div class="low-width-movie-dets">
-                        <div class="movieStsBar">
-                            <div class="movieDets-mini">
-
-                            </div>
-                        </div>
-                    </div>
-                    <button class="ranMovBtn" onclick="getDets()">Obtener más sugerencias de películas</button>
-                </div>
-
-            </center>
-
-            <center>
-                <div class="copyright">
-                    <h5 class="text-center">Derechos de autor © 2024 <a href="https://github.com/AviPatilPro"><span
-                                style="font-weight: 700;">Avishkar Patil</span></a>. Todos los
-                        derechos reservados.</h5>
-                </div>
-            </center>
-        </footer>
     </div>
 </body>
 
@@ -228,16 +97,10 @@ div.video-js .vjs-icon-placeholder, span {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
-<script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const uncopyableElement = document.querySelector(".uncopyable");
-
-        uncopyableElement.addEventListener("selectstart", function (event) {
-            event.preventDefault();
-        });
-    });
-</script>
-<script src="https://dl.dropbox.com/scl/fi/88cnhak5z7l4yby6r78wi/scriptCine.js?rlkey=8hu2nno1htmw4bjw3fjy2z2kv"></script>
+<script
+    src="https://dl.dropbox.com/scl/fi/ua8qn19jwy11pyvihfxew/jwplayer.js?rlkey=j60bldkdr3dxlbndfx4jh5ny5&st=p6cidvyu"></script>
+<script src="https://dl.dropbox.com/scl/fi/js27wwoqdrri9k9rqc1o3/configJW.js?rlkey=6ymvecidubmn10xm8d5tytz6g&st=fs1i0n39"></script>
+<script
+    src="https://dl.dropbox.com/scl/fi/88cnhak5z7l4yby6r78wi/scriptCine.js?rlkey=8hu2nno1htmw4bjw3fjy2z2kv"></script>
 
 </html>
