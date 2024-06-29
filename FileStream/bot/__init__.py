@@ -1,3 +1,5 @@
+#bot/__init__.py
+
 from ..config import Telegram
 from pyrogram import Client
 

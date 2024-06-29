@@ -1,3 +1,5 @@
+#server/__init__.py
+
 from aiohttp import web
 from .stream_routes import routes
 

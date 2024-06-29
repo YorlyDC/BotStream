@@ -1,3 +1,5 @@
+#__main__.py
+
 import sys
 import asyncio
 import logging

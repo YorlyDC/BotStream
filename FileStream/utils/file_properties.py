@@ -1,3 +1,5 @@
+#utils/file_properties.py
+
 from __future__ import annotations
 import logging
 from datetime import datetime
@@ -69,6 +71,8 @@ def get_media_file_size(m):
 
 
 def get_name(media_msg: Message | FileId) -> str:
+    file_name = ""
+
     if isinstance(media_msg, Message):
         media = get_media_from_message(media_msg)
         file_name = getattr(media, "file_name", "")

@@ -1,3 +1,5 @@
+#bot/plugins/start.py
+
 import logging
 import math
 from FileStream import __version__

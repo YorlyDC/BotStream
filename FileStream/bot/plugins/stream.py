@@ -1,3 +1,4 @@
+#bot/plugins/stream.py
 
 import asyncio
 from FileStream.bot import FileStream, multi_clients
