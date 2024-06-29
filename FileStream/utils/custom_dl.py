@@ -19,25 +19,17 @@ class ByteStreamer:
         asyncio.create_task(self.clean_cache())
 
     async def get_file_properties(self, db_id: str, multi_clients) -> FileId:
-        """
-        Returns the properties of a media of a specific message in a FileId class.
-        If the properties are cached, then it'll return the cached results.
-        Otherwise, it'll generate the properties from the Message ID and cache them.
-        """
-        
-        # Elimina la entrada de la caché si el archivo ya no existe
-        if db_id in self.cached_file_ids:
+        if not db_id in self.cached_file_ids:
             try:
-                await self.client.get_file(db_id)  # Intentamos obtener el archivo
+                file_info = await db.get_file(db_id)
+                file_id_telegram = file_info['file_id']
+                await self.client.get_file(file_id_telegram)
             except:
                 logging.debug("Error al obtener el archivo desde Telegram, regenerando propiedades")
-                del self.cached_file_ids[db_id]  # Eliminamos de la caché si falla
+                del self.cached_file_ids[db_id]
                 await self.generate_file_properties(db_id, multi_clients)
             else:
                 logging.debug(f"Cached file properties for file with ID {db_id}")
-        else:
-            await self.generate_file_properties(db_id, multi_clients)
-            
         return self.cached_file_ids[db_id]
     
     async def generate_file_properties(self, db_id: str, multi_clients) -> FileId:

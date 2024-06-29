@@ -15,32 +15,28 @@ from FileStream.config import Telegram, Server
 
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
-
 async def get_file_ids(client: Client | bool, db_id: str, multi_clients, message) -> Optional[FileId]:
     logging.debug("Starting of get_file_ids")
     file_info = await db.get_file(db_id)
 
-    # Si no hay 'file_ids' en la información del archivo o el cliente es False
     if (not "file_ids" in file_info) or not client:
         logging.debug("Storing file_id of all clients in DB")
-        if message:  # Solo llamamos a send_file si message no es False
+        if message: 
             log_msg = await send_file(FileStream, db_id, file_info['file_id'], message)
             await db.update_file_ids(db_id, await update_file_id(log_msg.id, multi_clients))
         logging.debug("Stored file_id of all clients in DB")
 
-        if not client:  # Si el cliente es False, salimos de la función
+        if not client: 
             return
 
         file_info = await db.get_file(db_id)
 
     file_id_info = file_info.setdefault("file_ids", {})
 
-    # Verificamos si el file_id es válido
     if str(client.id) in file_id_info:
         try:
             await client.get_file(file_id_info[str(client.id)]) 
         except:
-            # Si el file_id no es válido, lo eliminamos del diccionario
             del file_id_info[str(client.id)]
 
     if not str(client.id) in file_id_info:
@@ -53,10 +49,7 @@ async def get_file_ids(client: Client | bool, db_id: str, multi_clients, message
             await db.update_file_ids(db_id, file_id_info)
         logging.debug("Stored file_id in DB")
 
-    # Decodificamos el file_id obtenido de la base de datos
     file_id = FileId.decode(file_id_info[str(client.id)])
-
-    # Establecemos los atributos del file_id
     setattr(file_id, "file_size", file_info['file_size'])
     setattr(file_id, "mime_type", file_info['mime_type'])
     setattr(file_id, "file_name", file_info['file_name'])
