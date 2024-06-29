@@ -75,12 +75,14 @@ def get_name(media_msg: Message | FileId) -> str:
 
     if isinstance(media_msg, Message):
         media = get_media_from_message(media_msg)
-        file_name = getattr(media, "file_name", "")
+        if media:  # Verifica si se obtuvo un objeto de medios válido
+            file_name = getattr(media, "file_name", "")
 
     elif isinstance(media_msg, FileId):
         file_name = getattr(media_msg, "file_name", "")
 
     if not file_name:
+        media_type = "unknown"
         if isinstance(media_msg, Message) and media_msg.media:
             media_type = media_msg.media.value
         elif media_msg.file_type:
