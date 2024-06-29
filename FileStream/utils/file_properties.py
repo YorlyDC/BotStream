@@ -16,26 +16,44 @@ from FileStream.config import Telegram, Server
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
 
-async def get_file_ids(client: Client | bool, db_id: str, multi_clients, message) -> Optional[FileId]:
+async def get_file_ids(client: Client | bool, db_id: str, multi_clients, message=None) -> Optional[FileId]:
+
     logging.debug("Starting of get_file_ids")
     file_info = await db.get_file(db_id)
+
+    # Si no hay 'file_ids' en la información del archivo o el cliente es False
     if (not "file_ids" in file_info) or not client:
         logging.debug("Storing file_id of all clients in DB")
-        log_msg = await send_file(FileStream, db_id, file_info['file_id'], message)
-        await db.update_file_ids(db_id, await update_file_id(log_msg.id, multi_clients))
+        if message:  # Solo llamamos a send_file si message no es None
+            log_msg = await send_file(FileStream, db_id, file_info['file_id'], message)
+            await db.update_file_ids(db_id, await update_file_id(log_msg.id, multi_clients))
         logging.debug("Stored file_id of all clients in DB")
-        if not client:
+
+        if not client:  # Si el cliente es False, salimos de la función
             return
+        
+        # Actualizamos la información del archivo después de llamar a send_file
         file_info = await db.get_file(db_id)
 
+    # Obtenemos o creamos el diccionario de file_ids para este archivo
     file_id_info = file_info.setdefault("file_ids", {})
+
+    # Verificamos si el file_id existe antes de intentar obtenerlo de Telegram
+    if str(client.id) in file_id_info:
+        try:
+            await client.get_file(file_id_info[str(client.id)]) # Intentamos obtener el archivo
+        except:
+            # Si falla, eliminamos la entrada de la caché y regeneramos las propiedades
+            del file_id_info[str(client.id)]
+            
     if not str(client.id) in file_id_info:
         logging.debug("Storing file_id in DB")
-        log_msg = await send_file(FileStream, db_id, file_info['file_id'], message)
-        msg = await client.get_messages(Telegram.FLOG_CHANNEL, log_msg.id)
-        media = get_media_from_message(msg)
-        file_id_info[str(client.id)] = getattr(media, "file_id", "")
-        await db.update_file_ids(db_id, file_id_info)
+        if message:  # Solo llamamos a send_file si message no es None
+            log_msg = await send_file(FileStream, db_id, file_info['file_id'], message)
+            msg = await client.get_messages(Telegram.FLOG_CHANNEL, log_msg.id)
+            media = get_media_from_message(msg)
+            file_id_info[str(client.id)] = getattr(media, "file_id", "")
+            await db.update_file_ids(db_id, file_id_info)
         logging.debug("Stored file_id in DB")
 
     logging.debug("Middle of get_file_ids")
